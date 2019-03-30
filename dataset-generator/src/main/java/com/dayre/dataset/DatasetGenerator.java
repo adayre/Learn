@@ -23,7 +23,6 @@ public class DatasetGenerator {
 	private Configuration cfg ;
 	private Faker faker;
 	private Path dataDirectory;
-	private Template tpl;
 	public DatasetGenerator(Path dataDirectory) {
 		this.cfg = ConfigurationFactory.getConfiguration();
 		this.faker = Faker.instance();
@@ -51,8 +50,6 @@ public class DatasetGenerator {
 				
 		datamodel.put("heroes", heroes);
 		
-		
-		String datas="";
 		try( Writer fileWriter = new FileWriter(resultFile.toFile())) {
 			tpl.process(datamodel, fileWriter);
 		}			

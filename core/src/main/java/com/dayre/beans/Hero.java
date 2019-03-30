@@ -45,6 +45,11 @@ public class Hero {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	@Override
+	public String toString() {
+		return "Hero [name=" + name + ", quote=" + quote + ", location=" + location + ", date=" + date + "]";
+	}
 	
 	
 }
