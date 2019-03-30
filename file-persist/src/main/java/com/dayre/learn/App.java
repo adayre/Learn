@@ -2,26 +2,24 @@ package com.dayre.learn;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.dayre.learn.io.IOTools;
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
-	private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
-	
 	
     public static void main( String[] args )
     {
     	
-    	Path path = Paths.get("D:\\Dev\\workspace\\learn\\toto.gitignore");
-    	IOTools.createFile(path);
-    	LOGGER.error("blabla");
+        List<Path> pathList = Arrays.asList("bla.txt",
+        		"FileTest.txt",
+        		"AnotherFile.txt").stream().map(Paths::get).collect(Collectors.toList());
+    	
+    	IOTools.createZipFile(pathList, "./zipTest.doc");
+
     }
 }

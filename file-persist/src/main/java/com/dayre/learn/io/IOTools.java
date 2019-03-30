@@ -1,18 +1,26 @@
 package com.dayre.learn.io;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class IOTools {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(IOTools.class);
-	
-	private IOTools() {};
+
+	private IOTools() {
+	};
 
 	public static void createFile(Path path) {
 
@@ -28,7 +36,32 @@ public class IOTools {
 		LOGGER.trace("c'est fini");
 
 	}
-	
-	
+
+	public static void createZipFile(List<Path> files, String zipname) {
+
+		String fileName = getExtensionFile(zipname);
+		try (OutputStream fos = new FileOutputStream(fileName)) {
+			try (OutputStream bos = new BufferedOutputStream(fos)) {
+				try (ZipOutputStream zos = new ZipOutputStream(bos)) {
+					for (Path path : files) {
+						zos.putNextEntry(new ZipEntry(path.toString()));
+						zos.closeEntry();
+					}
+				}
+			}
+		} catch (IOException e) {
+			LOGGER.error("ERREUR", e);
+		}
+	}
+
+	private static String getExtensionFile(String zipname) {
+
+		final String requiredString = ".zip";
+		if (!FilenameUtils.getExtension(zipname).equals(requiredString)) {
+			zipname = FilenameUtils.getFullPath(zipname)+FilenameUtils.getBaseName(zipname)+requiredString;
+		}
+		return zipname;
+
+	}
 
 }
