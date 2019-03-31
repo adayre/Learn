@@ -1,21 +1,25 @@
 package com.dayre.learn;
 
-import com.dayre.learn.service.FilePersistService;
-import com.dayre.learn.service.PersistService;
+import com.dayre.beans.Hero;
+import com.dayre.dataset.HeroGenerator;
+import com.dayre.learn.service.DaoElement;
+import com.dayre.learn.service.DataService;
+import com.dayre.learn.service.FileDaoElement;
 
 public class Main {
 
 	public static void main(String[] args) {
+
+		DaoElement<Hero> fileDaoElement = new FileDaoElement();
+		DataService<Hero> heroService = new DataService<>(fileDaoElement);
 		
-		PersistService service =new FilePersistService(50);
-		
-		service.persistHeroFrom("Noxus");
-		
-		service.persistSpecificHero("Annie");
+		heroService.addElement(HeroGenerator.getRandomHero());
+		heroService.addElement(HeroGenerator.getRandomHero());
 		
 		
-				
-				
+		
+		
+
 	}
 
 }

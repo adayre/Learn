@@ -2,7 +2,7 @@ package com.dayre.beans;
 
 import java.util.Date;
 
-public class Hero {
+public class Hero extends Element{
 
 	
 	private String name;
@@ -11,7 +11,7 @@ public class Hero {
 	private Date date;
 	
 	public Hero() {
-		
+		super();
 	}
 	
 	public Hero(String name, String quote, String location, Date date) {

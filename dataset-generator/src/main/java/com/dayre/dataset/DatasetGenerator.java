@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import com.dayre.beans.Hero;
-import com.github.javafaker.Faker;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -21,11 +19,9 @@ public class DatasetGenerator {
 
 	private static final String dataFileName = "./heroes%d02.xml";
 	private Configuration cfg ;
-	private Faker faker;
 	private Path dataDirectory;
 	public DatasetGenerator(Path dataDirectory) {
 		this.cfg = ConfigurationFactory.getConfiguration();
-		this.faker = Faker.instance();
 		this.dataDirectory=dataDirectory;
 		
 		
@@ -45,7 +41,7 @@ public class DatasetGenerator {
 		Template tpl = cfg.getTemplate("heroes.tpl");
 		List<Hero> heroes = new ArrayList<>();
 		for (int i =0; i<numberOfElement;i++) {
-			heroes.add(generateRandomHero());
+			heroes.add(HeroGenerator.getRandomHero());
 		}
 				
 		datamodel.put("heroes", heroes);
@@ -57,14 +53,7 @@ public class DatasetGenerator {
 
 
 
-	private Hero generateRandomHero() {
-		Hero hero = new Hero();
-		hero.setName(this.faker.leagueOfLegends().champion());
-		hero.setLocation(this.faker.leagueOfLegends().location());
-		hero.setQuote(this.faker.leagueOfLegends().quote());
-		hero.setDate(this.faker.date().past(50, TimeUnit.DAYS));
-		return hero;
-	}
+
 	
 	
 	
